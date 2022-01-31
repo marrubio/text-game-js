@@ -7,19 +7,20 @@ import chalkAnimation from 'chalk-animation';
 import figlet from 'figlet';
 import { createSpinner } from 'nanospinner';
 
-console.log(chalk.greenBright('Hello everyone!'));
-
 let playerName;
 
 const sleep = (ms = 2000) => new Promise((r) => setTimeout(r, ms));
 
 async function wellcome() {
+    console.clear();
+    await title();
+    await sleep(100);      
     const rainbowTitle = chalkAnimation.rainbow(
-        'Who Wants To Be A JavaScript Millonaire? \n'
-    );
-
-    await sleep();
+        'by Mario Rubio 2022 \n'
+    );    
+    await sleep();    
     rainbowTitle.stop();
+    
 
     console.log(`
         ${chalk.bgBlue('HOW TO PLAY')}
@@ -28,12 +29,20 @@ async function wellcome() {
     `);
 }
 
+function title(){
+    
+    const msg = `TEXT GAME JS`;
+  
+    figlet(msg, (err, data) => {
+        console.log(gradient.pastel(data));
+    })
+}
 
 async function askName(){
     const answers = await inquirer.prompt({
         name: 'player_name',
         type: 'input',
-        message: 'What is yor name?',
+        message: 'What is your name?',
         default() {
             return 'Marshkalk';
         }
@@ -70,8 +79,20 @@ async function handleAnswer(isCorrect){
     }
 }
 
+function winner(){
+    
+    const msg = `Congrats , ${playerName}!\n Y O U  W I N`;
+
+    figlet(msg, (err, data) => {
+        console.log(gradient.pastel.multiline(data));
+    })
+}
+
+
 await wellcome();
 
 await askName();
 
 await question1();
+
+await winner();
